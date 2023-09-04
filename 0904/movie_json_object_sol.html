@@ -130,7 +130,7 @@
         //console.log(takeTable);
 
         // 기존 제목행 html 코드가져오기
-        let html = takeTable.innerHTML;
+        let html = takeTable.innerHTML;  // getter와 유사
         // 영화정보 json 반복하면서 <tr> 동적 만들기
         for(index = 0; index < movies.moviesInfo.length; index++) {
           html += `<tr title="찜클릭 - ${movies.moviesInfo[index].title}" 
@@ -145,7 +145,7 @@
         //console.log(typeof takeTable);
         //console.log(html);
         // 영화목록 테이블 동적 변경 추가하기
-        takeTable.innerHTML = html;
+        takeTable.innerHTML = html;  // setter와 유사
 
         // 영화찜 목록 체킹여부 위한 배열요소 초기화 확인
         // for(index = 0; index < isMovieLike.length; index++) {
