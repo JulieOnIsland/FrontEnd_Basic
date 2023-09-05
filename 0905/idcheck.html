@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아이디중복확인</title>
+    <!-- 외부 css -->
+    <link rel="stylesheet" href="common.css">
+    <!-- 내부 js -->
+    <script type='text/javascript'>
+        /* 아이디 배열 초기화 */
+        let memberIdList = ["user01", "user02", "user03"];
+        //let memberIdList = new Array("user01", "user02", "user03");
+
+
+        /* 자식창 로드시 이벤트 처리 */
+        window.onload = () => {
+            initWindow();
+            // 부모창에서 입력한 (아이디) 데이터 가져오기
+            // window.opener.doucment.xxxxx
+            let memberId = window.opener.document.querySelector("#memberId").value;
+
+            // 자식창(현재 아이디중복확인 창)의 아이디 데이터로 초기화하기
+            // 즉, 부모창의 데이터 가져와서 초기화 사용하기
+            document.querySelector("#memberIdCheck").value = memberId;
+
+        }
+
+        /* 아이디 중복창 초기화 함수 : 로드시 이벤트 처리 및 초기화 버튼 클릭 이벤트 처리
+            - 메세지 출력 영역 지우기
+            - 사용하기 버튼 비활성화 하기
+            - 아이디 입력정보 초기화하기
+            - 아이디 입력항목 포커스 위치하기
+        */
+        function initWindow() {
+            document.querySelector("#showMessage").innerText = "";
+            document.getElementById("btnUse").disabled = "disabled";
+            document.querySelector("#memberIdCheck").value = "";
+            document.querySelector("#memberIdCheck").focus();
+        }
+    </script>
+</head>
+<body>
+    <h2>아이디 중복확인</h2>
+    <form action="#" method="post">
+        <table>
+            <tr>
+                <td><input type="text" name="memberIdChcek" id="memberIdCheck"
+                    autofocus='autofocus'></td>
+                <td><input type="button" value="중복확인" id='btnIdCheck'></td>
+            </tr>
+            <tr>
+                <td colspan='2'>
+                    <input type="button" value="사용하기" id='btnUse'>
+                    <input type="button" value="초기화" id='btnReset'>
+                    <input type="button" value="창닫기" id='btnClose'>
+                </td>
+            </tr>
+            <tr>
+                <td colspan='2' id='showMessage'>메세지 출력영역</td>
+            </tr>
+        </table>
+    </form>
+
+    <!-- js : body가 모두 로드 된 후에 접근 이벤트 처리 -->
+    <script type='text/javascript'>
+        /* 2. 이벤트처리: 이벤트 핸들러 프로퍼티 이용한 방식
+        중복확인 버튼 클릭 이벤트 처리 함수 
+            1. 입력한 아이디 데이터 가져오기
+            2. 입력한 아이디가 사용자 아이디목록(배열) 존재 여부 체킹
+            3. 존재하지 않으면 "사용가능한 아이디입니다." 메세지 출력하고, 사용하기 버튼 활성화(비활성화 취소)
+            4. 존재하면 "사용 불가한 아이디입니다." 메세지 출력하고, 사용하기 버튼 비활성화
+        */
+        document.querySelector("#btnIdCheck").onclick = function() {
+            // 입력 아이디 가져오기
+            let memberId = document.getElementById("memberIdCheck").value;
+
+            // 메세지 영역 엘리먼트
+            let showMessageElement = document.querySelector("#showMessage");
+            // 사용하기 버튼 엘리먼트
+            let btnUseElement = document.getElementById("btnUse");
+
+            for(i=0; i < memberIdList.length; i++) {
+                if (memberIdList[i] == memberId) {
+                    showMessageElement.innerText = "사용 불가 아이디 입니다.";
+                    showMessageElement.style.color = "red";
+                    showMessageElement.style.fontWeight = "bold";
+                    btnUseElement.disabled = "disabled";
+                    // 아이디 입력항목으로 포커스 위치하기
+                    document.querySelector("#memberIdCheck").focus();
+                    //break;
+                    return;
+                }
+            }
+
+            // 사용 가능한 아이디 처리
+            showMessageElement.innerText = "사용 가능한 아이디 입니다.";
+            showMessageElement.style.color = "green";
+            btnUseElement.disabled = "";
+        }
+
+        /* 3. 이벤트처리: addEventListener() 메서드 처리 
+        아이디 키입력 이벤트 처리 */
+        document.querySelector("#memberIdCheck").addEventListener("keydown", function() {
+            document.querySelector("#showMessage").innerText = "";
+            document.getElementById("btnUse").disabled = "disabled";
+        });
+
+        /* 사용하기 버튼 클릭 이벤트 처리 */
+        document.querySelector("#btnUse").addEventListener("click", function() {
+            // 자식창(현재창) 검증받은 사용가능한 아이디 가져오기
+            let memberId = document.querySelector("#memberIdCheck").value;
+            // 자식창에서 검증받은 사용가능한 아이디를 부모창의 아이디로 초기화하기
+            window.opener.document.querySelector("#memberId").value = memberId;
+            // 부모창의 아이디를 변경하지 못하도록 읽기전용으로 설정하기
+            window.opener.document.querySelector("#memberId").readOnly = "readOnly";
+            // 부모창의 비밀번호 입력항목으로 포커스 위치하기
+            window.opener.document.querySelector("#memberPw").focus();
+            // 자식창 닫기
+            window.close();
+        });
+
+        /* 초기화 버튼 클릭 이벤트 처리 : callback 메서드 바인딩 : callback 메서드명만 표기할것!!! */
+        document.querySelector("#btnReset").addEventListener("click", initWindow);
+
+        /* 창닫기 버튼 클릭 이벤트 처리 */
+        document.querySelector("#btnClose").addEventListener("click", function() {
+            window.close();
+        });
+    </script>
+</body>
+</html>
