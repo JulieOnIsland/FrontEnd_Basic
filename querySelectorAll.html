@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+    <script type="text/javascript">
+      window.onload = function () {
+        // 1. original
+        var color = ["cyan", "magenta", "orange"];
+        // var ssafy = document.getElementsByClassName("ssafy");
+
+        // for (var i = 0; i < ssafy.length; i++) {
+        //   ssafy[i].style.background = color[i % 3];
+        // }
+
+        // 2. HTML Collection
+        // var ssafys = document.getElementsByClassName("ssafy"); 
+        // // ssafys는 배열이 아닌 유사 배열! 
+        // Array.from(ssafys).forEach((ssafy, i) => {
+        //   ssafy.style.background = color[i%3];
+        // });
+
+        // 3. querySelectorAll -> nodeList (array)
+        var ssafys = document.querySelectorAll(".ssafy");
+        ssafys.forEach((ssafy, i) => {
+          ssafy.style.background = color[i%3];
+        });
+
+      };
+    </script>
+  </head>
+  <body>
+    <h2 class="ssafy">Hello SSAFY 9th !!!</h2>
+    <h2 class="ssafy">Hello SSAFY 10th !!!</h2>
+    <h2 class="ssafy">Hello SSAFY 11th !!!</h2>
+    <h2 class="ssafy">Hello SSAFY 12th !!!</h2>
+    <h2 class="ssafy">Hello SSAFY 13th !!!</h2>
+    <h2 class="ssafy">Hello SSAFY 14th !!!</h2>
+  </body>
+</html>
