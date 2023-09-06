@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let data = [1, 2, 3];
+
+        // promise 객체 
+        function getData() { // 비동기 작업 수행 
+
+            return new Promise( (resolve, reject) => {
+
+            // delay
+            setTimeout( () => {
+                data.push(4);
+                data.push(5);
+                // 성공, 실패 판단
+                // resolve();
+                return reject('Error!');
+            }, 1000 );
+            });
+           
+        }
+
+        function printData() {
+            data.forEach(n => console.log(n));
+        }
+
+        getData()
+            .then(printData)
+            .catch( e => console.log(e) );
+    </script>
+</body>
+</html>

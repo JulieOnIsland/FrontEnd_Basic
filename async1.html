@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let data = [1, 2, 3];
+        // function getData() { // 비동기 작업 수행 
+        //     // delay
+        //     setTimeout( () => {
+        //         data.push(4)
+        //         data.push(5)
+        //         // data.push(6)
+        //     }, 1000 );
+        // }
+
+        // function printData() {
+        //     data.forEach(n => console.log(n));
+        // }
+
+        // getData();
+        // printData();
+
+        // callback
+        function getData(callback) { // 비동기 작업 수행 
+            // delay
+            setTimeout( () => {
+                data.push(4)
+                data.push(5)
+                // data.push(6)
+                callback(); // 비동기작업 완료 뒤 콜백 호출
+            }, 1000 );
+        }
+
+        function printData() {
+            data.forEach(n => console.log(n));
+        }
+
+        getData(printData);
+        // printData();
+    </script>
+</body>
+</html>
